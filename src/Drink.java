@@ -2,7 +2,8 @@ public enum Drink {
 
     TEA("tea","T",0.4),
     COFFEE("coffee","C",0.6),
-    CHOCOLATE("chocolate","H",0.5);
+    CHOCOLATE("chocolate","H",0.5),
+    ORANGE_JUICE("orange juice","O",0.6);
 
 
     private String name;

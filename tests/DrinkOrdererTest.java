@@ -18,27 +18,27 @@ public class DrinkOrdererTest {
 
     @Test
     public void sendingTeaMessageWithoutSugar() {
-        Assert.assertEquals("T::", drinkOrderer.createCommand(Drink.TEA,0, 0.4));
+        Assert.assertEquals("T::", command(Drink.TEA,0, 0.4));
     }
 
     @Test
     public void sendingCoffeeMessageWithoutSugar() {
-        Assert.assertEquals("C::", drinkOrderer.createCommand(Drink.COFFEE,0, 0.6));
+        Assert.assertEquals("C::", command(Drink.COFFEE,0, 0.6));
     }
 
     @Test
     public void sendingChocolateMessageWithoutSugar() {
-        Assert.assertEquals("H::", drinkOrderer.createCommand(Drink.CHOCOLATE,0, 0.5));
+        Assert.assertEquals("H::", command(Drink.CHOCOLATE,0, 0.5));
     }
 
     @Test
     public void sendingTeaMessageWithOneSugar() {
-        Assert.assertEquals("T:1:0", drinkOrderer.createCommand(Drink.TEA,1, 0.4));
+        Assert.assertEquals("T:1:0", command(Drink.TEA,1, 0.4));
     }
 
     @Test
     public void sendingChocolateWithTwoSugar() {
-        Assert.assertEquals("H:2:0", drinkOrderer.createCommand(Drink.CHOCOLATE,2, 0.5));
+        Assert.assertEquals("H:2:0", command(Drink.CHOCOLATE,2, 0.5));
     }
 
     @Test
@@ -53,12 +53,34 @@ public class DrinkOrdererTest {
 
     @Test
     public void sendingMessageBecauseOfNotEnoughMoney() {
-        Assert.assertEquals("M:Missing 0.3 dollar", drinkOrderer.createCommand(Drink.CHOCOLATE,0,0.2));
+        Assert.assertEquals("M:Missing 0.3 dollar", drinkOrderer.createCommand(Drink.CHOCOLATE,0,0.2, false));
     }
 
     @Test
     public void sendingCoffeeCommandWithOneDollarMore() {
-        Assert.assertEquals("C::", drinkOrderer.createCommand(Drink.COFFEE,0,1.6));
+        Assert.assertEquals("C::", command(Drink.COFFEE,0,1.6));
+    }
+
+    @Test
+    public void sendingOrangeJuiceCommand() {
+        Assert.assertEquals("O::", command(Drink.ORANGE_JUICE, 0,0.6));
+    }
+
+    @Test
+    public void sendingCoffeeExtraHotCommand() {
+        Assert.assertEquals("Ch::", commandExtraHot(Drink.COFFEE, 0, 0.6));
+    }
+
+    private String commandExtraHot(Drink drink, int sugar, double price) {
+
+        return drinkOrderer.createCommand(drink, sugar, price, true);
+
+    }
+
+    private String command(Drink drink, int sugar, double price) {
+
+        return drinkOrderer.createCommand(drink, sugar, price, false);
+
     }
 
 }
