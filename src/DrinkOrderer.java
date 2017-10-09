@@ -1,6 +1,11 @@
 class DrinkOrderer {
 
     private static final String MESSAGE_DELIMITER = ":";
+    private History history;
+
+    DrinkOrderer() {
+        history = new History();
+    }
 
     String createCommand(Drink drink, int sugar, double money, boolean extraHot) {
 
@@ -8,24 +13,31 @@ class DrinkOrderer {
             return sendMessage("Missing " + (drink.getPrice() - money) + " dollar");
         }
 
-        String command = drink.getLetter();
+        StringBuilder command = new StringBuilder();
+
+        command.append(drink.getLetter());
         if (extraHot) {
-            command+= "h";
+            command.append("h");
         }
-        command += MESSAGE_DELIMITER;
+        command.append(MESSAGE_DELIMITER);
 
         if(sugar != 0) {
-            command += sugar;
-            command += ":0";
+            command.append(sugar);
+            command.append(":0");
         }else {
-            command += MESSAGE_DELIMITER;
+            command.append(MESSAGE_DELIMITER);
         }
 
-        return command;
+        history.addDrink(drink);
+        return command.toString();
     }
 
     String sendMessage(String message) {
         return "M:" + message;
+    }
+
+    void displayHistory() {
+        System.out.println(history.getHistory());
     }
 
 }
